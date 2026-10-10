@@ -94,4 +94,4 @@ Palette: ivory `#F8F8F4`, graphite `#2E342D`, muted olive `#59634F`, pale sage `
 
 Bootstrap 5.3.8 is bundled locally. Lora and DM Sans fonts are bundled as Latin-subset WOFF2 files under their Open Font licences. The website does not depend on a CDN, tracking script or external font request to render.
 
-Content updated on 6 October 2026 from vastudesigns.co.nz, retaining the existing six-page layout and artwork. Business details, Aanchal's biography, services, the $495 property selection rate, FAQs and email contact follow the source website. The existing short home reflection remains in place; it is not presented as the source website's five-question quiz. Email hosting configuration is still required for form delivery.
+Content updated on 6 October 2026 from vastudesigns.co.nz, retaining the existing six-page layout and artwork. Business details, Aanchal's biography, services, FAQs and email contact follow the source website. The existing short home reflection remains in place; it is not presented as the source website's five-question quiz. Email hosting configuration is still required for form delivery.
