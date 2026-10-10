@@ -90,7 +90,7 @@ Vastu-Design-Website/
 - Home check, video URL and form behaviour: `assets/js/site.js`.
 - Enquiry destination: `contact-config.php`.
 
-Palette: ivory `#F8F8F4`, graphite `#2E342D`, muted olive `#59634F`, pale sage `#EFF1EA`, borders `#D8DED1`.
+Palette: ivory `#F8F8F4`, graphite `#2E342D`, deep terracotta `#8D5846`, pale sage `#EFF1EA`, borders `#D8DED1`.
 
 Bootstrap 5.3.8 is bundled locally. Lora and DM Sans fonts are bundled as Latin-subset WOFF2 files under their Open Font licences. The website does not depend on a CDN, tracking script or external font request to render.
 
