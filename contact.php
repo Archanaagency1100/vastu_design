@@ -92,14 +92,14 @@ if (!filter_var($recipient, FILTER_VALIDATE_EMAIL) || !filter_var($sender, FILTE
     respond(503, ['ok' => false, 'message' => 'We couldn’t send your enquiry at the moment. Please try again later.']);
 }
 
-$subject = 'Vastu Design enquiry — ' . $service;
+$subject = 'Vastu Designs enquiry — ' . $service;
 $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
-$body = "New Vastu Design enquiry\n\nName: {$name}\nEmail: {$email}\nPhone: " . ($phone !== '' ? $phone : 'Not supplied') . "\nService: {$service}\n\nMessage:\n{$message}\n\nConsent: agreed to be contacted about this enquiry.\n";
+$body = "New Vastu Designs enquiry\n\nName: {$name}\nEmail: {$email}\nPhone: " . ($phone !== '' ? $phone : 'Not supplied') . "\nService: {$service}\n\nMessage:\n{$message}\n\nConsent: agreed to be contacted about this enquiry.\n";
 $headers = [
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: 8bit',
-    'From: Vastu Design <' . $sender . '>',
+    'From: Vastu Designs <' . $sender . '>',
     'Reply-To: ' . $email,
 ];
 session_write_close();
@@ -107,4 +107,4 @@ session_write_close();
 if (!function_exists('mail') || !@mail($recipient, $encodedSubject, $body, implode("\r\n", $headers))) {
     respond(503, ['ok' => false, 'message' => 'We couldn’t send your enquiry at the moment. Please try again later.']);
 }
-respond(200, ['ok' => true, 'message' => 'Thank you. Your enquiry has been sent to Vastu Design.']);
+respond(200, ['ok' => true, 'message' => 'Thank you. Your enquiry has been sent to Vastu Designs.']);

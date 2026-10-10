@@ -1,4 +1,4 @@
-/* Vastu Design: shared Bootstrap interactions for all six pages. */
+/* Vastu Designs: shared Bootstrap interactions for all six pages. */
 (() => {
   'use strict';
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -27,7 +27,7 @@
     video.controls = true;
     video.preload = 'none';
     video.playsInline = true;
-    video.setAttribute('aria-label', 'Vastu Design — our story');
+    video.setAttribute('aria-label', 'Vastu Designs — our story');
     video.src = settings.storyVideoUrl;
     storyMedia.replaceChildren(video);
   }

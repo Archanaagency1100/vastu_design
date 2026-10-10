@@ -1,4 +1,4 @@
-# Vastu Design — multipage Bootstrap website
+# Vastu Designs — multipage Bootstrap website
 
 This folder contains the complete responsive six-page website and all local assets. No npm install or build step is required.
 
