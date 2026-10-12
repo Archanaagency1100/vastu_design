@@ -23,7 +23,7 @@
     <div class="container site-container">
       <div class="row align-items-center gy-4">
         <div class="col-lg-5">
-<a class="wordmark footer-wordmark" href="index.html">VASTU<span aria-hidden="true"> · </span>DESIGNS</a><p>The Power of Perfect Placement.</p>
+<a class="wordmark footer-wordmark" href="index.html">VASTU<span aria-hidden="true"> · </span>DESIGNS</a><p>Where Energy Finds Its Place.</p>
 </div>
         <div class="col-lg-7"><nav class="footer-nav" aria-label="Footer navigation"><a href="index.html">Home</a><a href="approach.html">Our approach</a><a href="services.html">Services</a><a href="story.html">Our story</a><a href="faqs.html">FAQs</a><a href="contact.html">Contact</a><span class="copyright">© <span id="year">2026</span> Vastu Designs Ltd &middot; Auckland</span></nav></div>
       </div>

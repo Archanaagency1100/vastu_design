@@ -94,7 +94,11 @@ if (!filter_var($recipient, FILTER_VALIDATE_EMAIL) || !filter_var($sender, FILTE
 
 $subject = 'Vastu Designs enquiry — ' . $service;
 $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
-$body = "New Vastu Designs enquiry\n\nName: {$name}\nEmail: {$email}\nPhone: " . ($phone !== '' ? $phone : 'Not supplied') . "\nService: {$service}\n\nMessage:\n{$message}\n\nConsent: agreed to be contacted about this enquiry.\n";
+$phoneText = $phone !== '' ? $phone : 'Not supplied';
+$body = "New Vastu Designs enquiry\n\nName: {$name}\nEmail: {$email}\nPhone: {$phoneText}\nService: {$service}\n\nMessage:\n{$message}\n\nConsent: agreed to be contacted about this enquiry.\n";
+$clientSubject = 'We received your Vastu Designs enquiry';
+$encodedClientSubject = '=?UTF-8?B?' . base64_encode($clientSubject) . '?=';
+$clientBody = "Hello {$name},\n\nThank you for contacting Vastu Designs. We have received your enquiry and will reply within one business day.\n\nYour enquiry details:\nService: {$service}\nPhone: {$phoneText}\nMessage:\n{$message}\n\nIf you need to add anything, reply to this email.\n\nRegards,\nVastu Designs\n";
 $headers = [
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
@@ -102,9 +106,21 @@ $headers = [
     'From: Vastu Designs <' . $sender . '>',
     'Reply-To: ' . $email,
 ];
+$clientHeaders = [
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: 8bit',
+    'From: Vastu Designs <' . $sender . '>',
+    'Reply-To: ' . $recipient,
+];
 session_write_close();
 
-if (!function_exists('mail') || !@mail($recipient, $encodedSubject, $body, implode("\r\n", $headers))) {
+if (!function_exists('mail')) {
+    respond(503, ['ok' => false, 'message' => 'We couldnâ€™t send your enquiry at the moment. Please try again later.']);
+}
+$ownerSent = @mail($recipient, $encodedSubject, $body, implode("\r\n", $headers));
+$clientSent = @mail($email, $encodedClientSubject, $clientBody, implode("\r\n", $clientHeaders));
+if (!$ownerSent || !$clientSent) {
     respond(503, ['ok' => false, 'message' => 'We couldn’t send your enquiry at the moment. Please try again later.']);
 }
 respond(200, ['ok' => true, 'message' => 'Thank you. Your enquiry has been sent to Vastu Designs.']);
