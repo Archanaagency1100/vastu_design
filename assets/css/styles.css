@@ -43,14 +43,14 @@ p{margin-bottom:1.15rem;color:var(--muted)}
 .wordmark{font-family:var(--heading-font);font-size:1.75rem;font-weight:500;letter-spacing:-.055em;line-height:1.15;white-space:nowrap;color:var(--graphite)}
 .wordmark span{display:inline-block;margin:0 .05em}
 .brand-lockup{display:inline-flex;align-items:center;line-height:0;overflow:hidden;background:#000}
-.brand-logo{display:block;width:136px;height:70px;object-fit:contain}
+.brand-logo{display:block;width:180px;height:92px;object-fit:contain}
 .navbar-brand{margin-right:28px}
 .navbar .nav-link{font-size:.9375rem;font-weight:400;color:#fff;padding:12px 16px!important}
 .navbar .nav-link:hover,.navbar .nav-link:focus{color:#fff}
 .nav-booking{margin-left:20px}
 .navbar-toggler{border:1px solid #fff;border-radius:0;padding:8px;min-width:44px;min-height:44px}
 .navbar-toggler:focus{box-shadow:0 0 0 3px rgba(89,99,79,.2)}
-.navbar-toggler-icon{width:1.2em;height:1.2em;filter:invert(1)}
+.navbar-toggler-icon{width:1.2em;height:1.2em;filter:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23d6a33a' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")}
 .btn{border-radius:2px;padding:12px 22px;min-height:46px;font-family:var(--body-font);font-size:.9375rem;font-weight:500;line-height:1.4;letter-spacing:0;transition:background-color .18s,color .18s,border-color .18s,box-shadow .18s}
 .btn-vastu{color:#fff;background:var(--olive);border:1px solid var(--olive)}
 .btn-vastu:hover,.btn-vastu:focus-visible,.btn-vastu:active{color:#fff;background:var(--olive-hover);border-color:var(--olive-hover)}
@@ -113,6 +113,7 @@ p{margin-bottom:1.15rem;color:var(--muted)}
 .developer-section p{color:var(--ivory)}
 .developer-section .eyebrow{color:#e8ebdf}
 .developer-section .eyebrow::after{background:rgba(248,248,244,.4)}
+.next-step-eyebrow{color:#d6a33a!important}
 .story-section{border-bottom:1px solid var(--line)}
 .story-video-frame{position:relative;width:100%;max-width:540px;margin:auto;overflow:hidden;background:var(--sage)}
 .story-figure figcaption{text-align:center;font-size:.875rem;margin:15px 0 0;color:var(--muted)}
