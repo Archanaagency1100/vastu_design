@@ -42,6 +42,8 @@ p{margin-bottom:1.15rem;color:var(--muted)}
 .navbar{min-height:86px;padding-top:12px;padding-bottom:12px}
 .wordmark{font-family:var(--heading-font);font-size:1.75rem;font-weight:500;letter-spacing:-.055em;line-height:1.15;white-space:nowrap;color:var(--graphite)}
 .wordmark span{display:inline-block;margin:0 .05em}
+.brand-lockup{display:inline-flex;align-items:center;line-height:0;overflow:hidden;background:transparent}
+.brand-logo{display:block;width:116px;height:62px;object-fit:contain}
 .navbar-brand{margin-right:28px}
 .navbar .nav-link{font-size:.9375rem;font-weight:400;color:var(--muted);padding:12px 16px!important}
 .navbar .nav-link:hover,.navbar .nav-link:focus{color:var(--graphite)}
@@ -141,7 +143,8 @@ textarea.form-control{min-height:155px;resize:vertical}
 .form-status.is-error{border-color:#ccaba6;color:#7a352d;background:#fff8f7}
 .form-status.is-success{background:var(--sage)}
 .site-footer{padding:38px 0 32px}
-.footer-wordmark{display:inline-block;font-size:1.6rem}
+.footer-brand-lockup{width:160px;height:116px}
+.footer-brand-lockup .brand-logo{width:100%;height:100%}
 .site-footer p{font-size:.875rem;margin:7px 0 0}
 .footer-nav{display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:16px 22px;font-size:.875rem;line-height:1.5}
 .footer-nav a{padding:10px 0;min-height:40px}

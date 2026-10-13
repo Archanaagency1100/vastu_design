@@ -59,6 +59,62 @@ function textLength(string $value): int {
     return function_exists('mb_strlen') ? mb_strlen($value, 'UTF-8') : strlen($value);
 }
 
+function smtpRead($socket): string {
+    $response = '';
+    while (($line = fgets($socket, 515)) !== false) {
+        $response .= $line;
+        if (strlen($line) < 4 || $line[3] !== '-') break;
+    }
+    return $response;
+}
+
+function smtpCommand($socket, string $command, array $expectedCodes): void {
+    if ($command !== '') fwrite($socket, $command . "\r\n");
+    $response = smtpRead($socket);
+    $code = (int) substr($response, 0, 3);
+    if (!in_array($code, $expectedCodes, true)) throw new RuntimeException('SMTP command failed.');
+}
+
+function smtpSend(string $host, int $port, string $username, string $password, string $from, string $to, string $subject, string $body, string $replyTo): bool {
+    if ($host === '' || $port < 1 || $username === '' || $password === '' || $from === '' || $to === '') return false;
+    $transport = $port === 465 ? 'ssl://' . $host : $host;
+    $socket = @stream_socket_client($transport . ':' . $port, $errno, $errstr, 20, STREAM_CLIENT_CONNECT);
+    if (!$socket) return false;
+    stream_set_timeout($socket, 20);
+    try {
+        smtpCommand($socket, '', [220]);
+        smtpCommand($socket, 'EHLO ' . ($_SERVER['SERVER_NAME'] ?? 'localhost'), [250]);
+        if ($port !== 465) {
+            smtpCommand($socket, 'STARTTLS', [220]);
+            if (!@stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) throw new RuntimeException('TLS failed.');
+            smtpCommand($socket, 'EHLO ' . ($_SERVER['SERVER_NAME'] ?? 'localhost'), [250]);
+        }
+        smtpCommand($socket, 'AUTH LOGIN', [334]);
+        smtpCommand($socket, base64_encode($username), [334]);
+        smtpCommand($socket, base64_encode($password), [235]);
+        smtpCommand($socket, 'MAIL FROM:<' . $from . '>', [250]);
+        smtpCommand($socket, 'RCPT TO:<' . $to . '>', [250, 251]);
+        smtpCommand($socket, 'DATA', [354]);
+        $message = "MIME-Version: 1.0\r\n"
+            . "Content-Type: text/plain; charset=UTF-8\r\n"
+            . "Content-Transfer-Encoding: 8bit\r\n"
+            . "From: Vastu Designs <" . $from . ">\r\n"
+            . "Reply-To: " . $replyTo . "\r\n"
+            . "To: " . $to . "\r\n"
+            . "Subject: " . $subject . "\r\n\r\n"
+            . $body;
+        $message = preg_replace('/\r?\n/', "\r\n", $message);
+        $message = preg_replace('/(?m)^\./', '..', $message);
+        smtpCommand($socket, $message . "\r\n.", [250]);
+        smtpCommand($socket, 'QUIT', [221, 250]);
+        fclose($socket);
+        return true;
+    } catch (Throwable $error) {
+        fclose($socket);
+        return false;
+    }
+}
+
 if (field($data, 'website') !== '') {
     respond(422, ['ok' => false, 'message' => 'Please check your enquiry and try again.']);
 }
@@ -115,11 +171,15 @@ $clientHeaders = [
 ];
 session_write_close();
 
-if (!function_exists('mail')) {
+if (!function_exists('stream_socket_client')) {
     respond(503, ['ok' => false, 'message' => 'We couldnâ€™t send your enquiry at the moment. Please try again later.']);
 }
-$ownerSent = @mail($recipient, $encodedSubject, $body, implode("\r\n", $headers));
-$clientSent = @mail($email, $encodedClientSubject, $clientBody, implode("\r\n", $clientHeaders));
+$smtpHost = (string) ($config['smtp_host'] ?? '');
+$smtpPort = (int) ($config['smtp_port'] ?? 465);
+$smtpUsername = (string) ($config['smtp_username'] ?? '');
+$smtpPassword = (string) ($config['smtp_password'] ?? '');
+$ownerSent = smtpSend($smtpHost, $smtpPort, $smtpUsername, $smtpPassword, $sender, $recipient, $encodedSubject, $body, $email);
+$clientSent = $ownerSent && smtpSend($smtpHost, $smtpPort, $smtpUsername, $smtpPassword, $sender, $email, $encodedClientSubject, $clientBody, $recipient);
 if (!$ownerSent || !$clientSent) {
     respond(503, ['ok' => false, 'message' => 'We couldn’t send your enquiry at the moment. Please try again later.']);
 }
