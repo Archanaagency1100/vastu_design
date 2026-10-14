@@ -152,23 +152,6 @@ $subject = 'Vastu Designs enquiry — ' . $service;
 $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
 $phoneText = $phone !== '' ? $phone : 'Not supplied';
 $body = "New Vastu Designs enquiry\n\nName: {$name}\nEmail: {$email}\nPhone: {$phoneText}\nService: {$service}\n\nMessage:\n{$message}\n\nConsent: agreed to be contacted about this enquiry.\n";
-$clientSubject = 'We received your Vastu Designs enquiry';
-$encodedClientSubject = '=?UTF-8?B?' . base64_encode($clientSubject) . '?=';
-$clientBody = "Hello {$name},\n\nThank you for contacting Vastu Designs. We have received your enquiry and will reply within one business day.\n\nYour enquiry details:\nService: {$service}\nPhone: {$phoneText}\nMessage:\n{$message}\n\nIf you need to add anything, reply to this email.\n\nRegards,\nVastu Designs\n";
-$headers = [
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: 8bit',
-    'From: Vastu Designs <' . $sender . '>',
-    'Reply-To: ' . $email,
-];
-$clientHeaders = [
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: 8bit',
-    'From: Vastu Designs <' . $sender . '>',
-    'Reply-To: ' . $recipient,
-];
 session_write_close();
 
 if (!function_exists('stream_socket_client')) {
@@ -179,8 +162,7 @@ $smtpPort = (int) ($config['smtp_port'] ?? 465);
 $smtpUsername = (string) ($config['smtp_username'] ?? '');
 $smtpPassword = (string) ($config['smtp_password'] ?? '');
 $ownerSent = smtpSend($smtpHost, $smtpPort, $smtpUsername, $smtpPassword, $sender, $recipient, $encodedSubject, $body, $email);
-$clientSent = $ownerSent && smtpSend($smtpHost, $smtpPort, $smtpUsername, $smtpPassword, $sender, $email, $encodedClientSubject, $clientBody, $recipient);
-if (!$ownerSent || !$clientSent) {
+if (!$ownerSent) {
     respond(503, ['ok' => false, 'message' => 'We couldn’t send your enquiry at the moment. Please try again later.']);
 }
-respond(200, ['ok' => true, 'message' => 'Thank you. Your enquiry has been sent to Vastu Designs.']);
+respond(200, ['ok' => true, 'message' => 'Your enquiry has been sent.']);

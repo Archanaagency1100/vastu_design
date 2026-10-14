@@ -32,13 +32,13 @@ Then open `http://localhost:8000`.
 Open `contact-config.php` and enter:
 
 ```php
-'recipient_email' => 'YOUR_RECEIVING_EMAIL',
+'recipient_email' => 'vastudesignsnz@gmail.com',
 'sender_email' => 'AN_EMAIL_ON_YOUR_HOSTED_DOMAIN',
 ```
 
 Alternatively set `VASTU_CONTACT_EMAIL` and `VASTU_FROM_EMAIL` in your hosting environment. The sender should use the website's own domain and be allowed by the hosting provider. Upload all files to PHP 7.4+ hosting with mail delivery enabled. Test delivery to your receiving inbox after configuration. PHP accepting a message does not guarantee inbox delivery; mail configuration, SPF/DKIM and spam filtering are managed by your host.
 
-The form includes front-end and server-side validation, a CSRF token, a honeypot, a session-based submission limit and honest failure states. It does not pretend to send before a recipient is configured. The session limit is a basic deterrent, not a replacement for host-level abuse controls.
+The form sends enquiry details only to the configured receiving address; it does not send confirmation emails to people who submit the form. It includes front-end and server-side validation, a CSRF token, a honeypot, a session-based submission limit and honest failure states. It does not pretend to send before a recipient is configured. The session limit is a basic deterrent, not a replacement for host-level abuse controls.
 
 ## Story image and video
 
